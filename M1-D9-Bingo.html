@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--
+        BINGO CHALLENGE!!!
+        Create programmatically (with JS) a BINGO board with 76 cells, from 1 to 76.
+        Create a button to randomize a number from 1 to 76. The same number should be highlighted on the bingo board
+        EXTRA: 
+        - Take ALWAYS a new number (avoid randoming 10 3 times for example)
+        - Create a USER BOARD with random 24 numbers that highlights as the main board does
+        - Let the user choose HOW MANY user boards he's willing to play with and create them.
+    -->
+<html lang="en">
+
+<head>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Flanagan M1-D9</title>
+        <link rel="stylesheet" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap" rel="stylesheet" />
+
+    </head>
+
+<body>
+    <h1>Bingo!</h1>
+    <div id="board">
+        <!-- bingo cells will be inserted here -->
+    </div>
+    <h2>Eyes down...</h2>
+    <div id="randomNumberGenerator">
+        <div>
+            <h4>Bingo Ball Generator</h4>
+            <form name="rn">
+                <input type="text" id="tb" name="tb" />
+                <input type="button" value="Press for a number!" onclick="Random();" />
+            </form>
+        </div>
+    </div>
+    <div id="numbersCalled">
+        <h2>Numbers Called:</h2>
+        <ul id="numbersList"></ul>
+        <!-- this will receive appointments via js -->
+    </div>
+    <div id="bingoTicket">
+        <h4>Bingo Ticket</h4>
+    </div>
+    <div>
+        <h4>Add More Tickets</h4>
+        <label for="quantity">Quantity (between 1 and 5):</label>
+        <input type="number" id="quantity" name="quantity" min="1" max="5">
+        <input type="submit">
+    </div>
+    </div>
+    <br />
+    <script src="index.js"></script>
+</body>
+
+</html>

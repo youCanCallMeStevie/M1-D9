@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f8f8;
+            font-family: "Poppins", sans-serif;
+            color: #1b1b1b;
+            max-width: 768px;
+            margin: 0 auto;
+            font-size: 18px;
+        }
+
+        h1 {
+            font-size: 64px;
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-size: 36px;
+            margin-bottom: 1rem;
+        }
+
+        #calendar {
+            background-color: #1b1b1b;
+            color: white;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 6px solid #1b1b1b;
+            border-radius: 8px;
+        }
+
+        .day {
+            display: inline-block;
+            width: 14%;
+            text-align: center;
+            min-height: 100px;
+            border: 1px solid transparent;
+        }
+
+        .day h3 {
+            font-weight: 300;
+            font-size: 26px;
+            margin-top: calc(100px / 2 - 22px);
+        }
+
+        #addMeeting {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        input {
+            width: 100%;
+            min-height: 24px;
+            background-color: #1b1b1b;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        input:focus {
+            background-color: white;
+            color: black;
+        }
+
+        input::placeholder {
+            color: white;
+        }
+
+        input:focus::placeholder {
+            color: black;
+        }
+
+        input[type="time"] {
+            cursor: pointer;
+        }
+
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            background-color: #00ff84;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[value="Save Meeting"] {
+            background-color: #00ff84;
+            color: #1b1b1b;
+            cursor: pointer;
+            min-height: 44px;
+        }
+
+        .selected {
+            border: 1px solid #00ff84;
+            border-radius: 6px;
+        }
+
+        #appointments {
+            display: none;
+        }
+
+        ul {
+            padding: 0;
+            /* list-style-type: none; */
+        }
+
+        li {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>October</h1>
+    <div id="calendar">
+        <!-- days cells will be inserted here -->
+    </div>
+    <h2>Add Meeting</h2>
+    <div id="addMeeting">
+        <div>
+            <h4>Meeting Day</h4>
+            <span id="newMeetingDay">Click on a Day</span>
+        </div>
+        <div>
+            <h4>Meeting Time</h4>
+            <input type="time" id="newMeetingTime" />
+        </div>
+        <div>
+            <h4>Meeting Name</h4>
+            <input type="text" id="newMeetingName" placeholder="Insert a name for the meeting" />
+        </div>
+        <div>
+            <h4>Add</h4>
+            <input type="button" value="Save Meeting" onclick="saveMeeting()" />
+        </div>
+    </div>
+    <br />
+    <div id="appointments">
+        <h2>Appointments for the day:</h2>
+        <ul id="appointmentList"></ul>
+        <!-- this will receive appointments via js -->
+    </div>
+    <script>
+        let appointments = [];
+
+        const daysInThisMonth = function () {
+            const now = new Date();
+            return new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate(); // returns the number of days in the current month
+            // We go +1 month and with the third argument 0 we ask for the last day of the month before, the current month, what we wanted in the first place
+        };
+
+        const saveMeeting = function () {
+            const meetingDay = document.querySelector("#newMeetingDay").innerText; // grabs the day in the newMeetingDay h4
+            let meetingTime = document.querySelector("#newMeetingTime"); // grabs the time from the input
+            let meetingName = document.querySelector("#newMeetingName"); // grabs the meeting name from the input
+
+            console.log(meetingDay, meetingTime.value, meetingName.value);
+            appointments[parseInt(meetingDay) - 1].push( // the value is correct, but the position is because we are are not starting from 0 in the calender
+                meetingTime.value + " - " + meetingName.value
+            );
+            meetingTime.value = "";
+            meetingName.value = "";
+
+            // console.log("APPOINTMENTS", appointments);
+            showAppointments(parseInt(meetingDay)); // shows the appointments for the currently selected day (passes the meetingDay as an integer as a parameter)
+        };
+
+        const showAppointments = function (day) {
+            // receives the day from the code, so it knows which portion of the appointments array needs to be taken (which day)
+            let todaysAppointments = appointments[day - 1];
+            // now todaysAppointments is the array containing the events for the day passed
+            document.querySelector("#appointments").style.display = "block"; // sets the appointments section to be visible!
+            let appointmentList = document.querySelector("#appointmentList"); // here I target the unordered list in html
+            appointmentList.innerHTML = ""; // and here to be sure I erase any old trace
+
+            for (let i = 0; i < todaysAppointments.length; i++) {
+                // for every event in that day...
+                let li = document.createElement("li"); // create an empty list element
+                li.innerHTML = todaysAppointments[i]; // sets the content for it with the correct event in todaysAppointments
+                appointmentList.appendChild(li); // appends the newly created list element to the unordered list!
+            }
+        };
+
+        window.onload = function () {
+            const numberOfDays = daysInThisMonth(); // 31 in October
+            console.log("this is the value of numberOfDays", numberOfDays);
+            let calendar = document.querySelector("#calendar"); // getting a reference for the calendar div
+            for (let i = 0; i < numberOfDays; i++) {
+                appointments[i] = []; // here I'm creating a spot for each day I'm looping, and assign that to an empty array
+                /* appointments is like:
+              [
+                [], [], [], [], [], [], [],
+                [], [], [], [], [], [], [],
+                [], [], [], [], [], [], [],
+                ...
+              ]
+            */
+                const child = document.createElement("div"); // this will create an empty day cell
+                child.className = "day"; // assigning the CSS class
+
+                child.onclick = function (event) {
+                    // if I found one, I remove its 'selected' class, resetting the situation
+                    let selected = document.querySelector(".selected");
+                    if (selected) {
+                        selected.classList.remove("selected");
+                    }
+                    // now we don't have for sure any .selected class on any element
+                    event.currentTarget.classList.add("selected");
+
+                    document.querySelector("#newMeetingDay").innerText = i + 1;
+                    document.querySelector("#newMeetingDay").style.cssText =
+                        "font-size: 28px; background-color: #181818; border-radius: 3px; color: white; padding: 2px 6px";
+
+                    let todaysAppointments = appointments[i]; // finding the appointments for the day in the appointments array
+                    if (todaysAppointments.length > 0) {
+                        // if we have any event for that day
+                        showAppointments(i + 1); // invoking showAppointments passing the day of the month as the parameter
+                    } else {
+                        // if we DON'T have any event for that day
+                        document.querySelector("#appointments").style.display = "none"; // hide the appointments sections
+                    }
+                };
+                const day = document.createElement("h3");
+                const dayOfTheMonth = i + 1;
+                day.innerText = dayOfTheMonth;
+
+                child.appendChild(day);
+                calendar.appendChild(child);
+            }
+        };
+    </script>
+</body>
+
+</html>
