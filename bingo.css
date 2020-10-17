@@ -1,0 +1,66 @@
+body {
+  background-color: #f8f8f8;
+  font-family: "Poppins", sans-serif;
+  color: #1b1b1b;
+  margin: 0 auto;
+  width: 100vw;
+  font-size: 18px;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  margin: 60px;
+  flex-direction: column;
+  justify-content: center; /*means my board, which is in my container, will be centre */
+}
+
+#bingo-board {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #1b1b1b;
+  color: white;
+  width: 90%;
+  margin: 20px 0;
+  border: 6px solid red;
+  border-radius: 8px;
+}
+#bingo-board div {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  width: 6.33%; /* width of the cells to take up for the 100% of the width of the contianer, there are 15 cells in each bingo row*/
+  text-align: center;
+  min-height: 100px;
+  border-radius: 8px;
+  /* border: 1px solid #bbbbbb; */
+}
+
+.active {
+  background-color: rgb(113, 111, 111);
+  border: 1px solid limegreen;
+}
+
+#player-board {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #613333;
+  color: #2b2b2b;
+  width: 50%;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+#player-board div {
+  display: grid;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 5px;
+  width: 20%;
+  text-align: center;
+  min-height: 100px;
+  border-radius: 8px;
+  border: 3px solid #bbbbbb;
+}
