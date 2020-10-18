@@ -34,6 +34,8 @@ const bingoNumbers = () => {
   }
   let currentActive = document.getElementById(`cell-${number}`);
   currentActive.classList.add("active");
+  let playerActive = document.getElementById(`player-cell-${number}`);
+  if (playerActive) playerActive.classList.add("active");
 };
 
 //creating the bingo board
@@ -49,27 +51,30 @@ for (let num of numbers) {
 
 //creating numbers for player board
 function generateNums() {
-  for (let i = 1; i <= 24; i++) {
+  for (let i = 1; i <= 25; i++) {
     let num = Math.floor(Math.random() * 75);
     nums.push(num);
   }
-}
-generateNums();
 
-//creating the player board
-const playerBoard = document.getElementById("player-board");
-for (let num of nums) {
-  // "of" is asigning each element in the array of 'numbers' the new variable of 'num'
-  const cell = document.createElement("div");
-  cell.innerText = num;
-  cell.id = `cell-${num}`; //anything that is outside of the {} read as a string, anything inside read as JS. interpolation
-  playerBoard.appendChild(cell);
+  //creating the player board
+  const playerBoard = document.getElementById("player-board");
+  for (let num of nums) {
+    // "of" is asigning each element in the array of 'numbers' the new variable of 'num'
+    const cell = document.createElement("div");
+    cell.innerText = num;
+    cell.id = `player-cell-${num}`; //anything that is outside of the {} read as a string, anything inside read as JS. interpolation
+    playerBoard.appendChild(cell);
+  }
 }
+
+window.onload = () => {
+  generateNums();
+};
 
 //button in JavaScript
 
-const bingoCaller = document.getElementsByClassName("bingo-caller")[0];
-const button = document.createElement("button");
-button.innerText = "Generate Bingo Number";
-button.onclick = bingoNumbers;
-bingoCaller.appendChild(button);
+// const bingoCaller = document.getElementById("bingo-caller");
+// const button = document.createElement("button");
+// button.innerText = "Generate Bingo Number";
+// button.onclick = bingoNumbers;
+// bingoCaller.appendChild(button);

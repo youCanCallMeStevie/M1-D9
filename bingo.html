@@ -13,8 +13,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bingo</title>
-    <link rel="stylesheet" href="mike.css" />
+    <title>Bingo!</title>
+    <link rel="stylesheet" href="bingo.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap"
       rel="stylesheet"
@@ -23,10 +23,16 @@
   <body>
     <div class="container">
       <h1>Bingo!</h1>
-      <div id="bingo-board"></div>
-      <div class="bingo-caller"></div>
+      <div class="bingo-board-container">
+        <div id="bingo-board"></div>
+        <div id="bingo-caller"></div>
+        <button onclick="bingoNumbers()">Bingo Caller</button>
+        <button onclick="generateNums()">Add a Card</button>
+        <button onClick="window.location.reload();">Start a New Game</button>
+      </div>
       <div id="player-board"></div>
+      <div class="player-board-container"></div>
     </div>
   </body>
-  <script src="/mike.js"></script>
+  <script src="/bingo.js"></script>
 </html>
