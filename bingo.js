@@ -55,7 +55,7 @@ function generateNums() {
   const nums = [];
 
   for (let i = 1; i <= 25; i++) {
-    let num = Math.floor(Math.random() * 75);
+    let num = Math.floor(Math.random() * 75 + 1);
     nums.push(num);
   }
 
