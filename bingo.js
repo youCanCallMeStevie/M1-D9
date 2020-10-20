@@ -8,8 +8,8 @@ for (let x = 1; x <= 75; x++) {
   numbers.push(x);
 }
 
-const previousNumbers = document.createElement("div");
-document.querySelector(".container").appendChild(previousNumbers);
+// const previousNumbers = document.createElement("div");
+// document.querySelector(".container").appendChild(previousNumbers); // i was just appending to the bottom of the container with this orginally...
 //helper function
 
 const bingoNumbers = () => {
@@ -21,7 +21,7 @@ const bingoNumbers = () => {
     if (calledNumbers.includes(number)) unique = false;
     else unique = true;
   }
-
+  const previousNumbers = document.getElementById("previous-numbers");
   calledNumbers.push(number); //filling the array of calledNumbers
   let previous = "";
   calledNumbers.forEach((num) => (previous += `${num}, `)); //forEach is a more modern syntex of 'for' 'of'
@@ -57,19 +57,27 @@ function generateNums() {
   }
 
   //creating the player board
-  const playerBoard = document.getElementById("player-board");
+
+  const playerBoardContainer = document.getElementById(
+    "player-board-container"
+  );
+
+  const newBoard = document.createElement("div");
+  newBoard.id = `board-${playerBoardContainer.children.length}`; //assigning a new id dynamically to each board
+
   for (let num of nums) {
     // "of" is asigning each element in the array of 'numbers' the new variable of 'num'
     const cell = document.createElement("div");
     cell.innerText = num;
     cell.id = `player-cell-${num}`; //anything that is outside of the {} read as a string, anything inside read as JS. interpolation
-    playerBoard.appendChild(cell);
+    newBoard.appendChild(cell);
   }
+  playerBoardContainer.appendChild(newBoard);
 }
 
-window.onload = () => {
-  generateNums();
-};
+// window.onload = () => {
+//   generateNums();
+// };
 
 //button in JavaScript
 
