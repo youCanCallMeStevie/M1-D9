@@ -2,7 +2,6 @@
 
 const numbers = [];
 const calledNumbers = [];
-const nums = [];
 
 for (let x = 1; x <= 75; x++) {
   numbers.push(x);
@@ -10,6 +9,7 @@ for (let x = 1; x <= 75; x++) {
 
 // const previousNumbers = document.createElement("div");
 // document.querySelector(".container").appendChild(previousNumbers); // i was just appending to the bottom of the container with this orginally...
+
 //helper function
 
 const bingoNumbers = () => {
@@ -34,6 +34,7 @@ const bingoNumbers = () => {
   }
   let currentActive = document.getElementById(`cell-${number}`);
   currentActive.classList.add("active");
+
   let playerActive = document.getElementById(`player-cell-${number}`);
   if (playerActive) playerActive.classList.add("active");
 };
@@ -51,6 +52,8 @@ for (let num of numbers) {
 
 //creating numbers for player board
 function generateNums() {
+  const nums = [];
+
   for (let i = 1; i <= 25; i++) {
     let num = Math.floor(Math.random() * 75);
     nums.push(num);
@@ -64,6 +67,7 @@ function generateNums() {
 
   const newBoard = document.createElement("div");
   newBoard.id = `board-${playerBoardContainer.children.length}`; //assigning a new id dynamically to each board
+  newBoard.classList.add("player-board-style");
 
   for (let num of nums) {
     // "of" is asigning each element in the array of 'numbers' the new variable of 'num'
